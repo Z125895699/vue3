@@ -1,0 +1,163 @@
+<template>
+  <div class="page-content">
+    <hy-table
+      :dataList="dataList"
+      :listCount="listCount"
+      v-bind="contentTableConfig"
+      v-model:page="pageInfo"
+    >
+      <!-- 列中的插槽 -->
+      <template #status="scope">
+        <el-button type="success" size="small" plain>
+          {{ scope.row.status ? '禁用' : '启用' }}
+        </el-button>
+      </template>
+      <!-- 时间格式化 -->
+      <template #createAt="scope">
+        <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+      </template>
+      <template #updateAt="scope">
+        <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+      </template>
+      <template #image="scope">
+        <el-image
+          style="width: 60px; height: 60px"
+          :src="scope.row.imgUrl"
+          :preview-src-list="[scope.row.imgUrl]"
+        >
+        </el-image>
+      </template>
+      <template #handle="scope">
+        <el-button size="mini" @click="handleEditClick(scope.row)">
+          编辑
+        </el-button>
+        <el-popconfirm
+          confirm-button-text="是的"
+          cancel-button-text="不"
+          icon="el-icon-info"
+          icon-color="red"
+          title="你确定要删除这个吗?"
+          @confirm="handleDeleteClick(scope.row)"
+        >
+          <template #reference>
+            <el-button size="mini" type="danger"> 删除 </el-button>
+          </template>
+        </el-popconfirm>
+        <!-- <el-button
+          size="mini"
+          type="danger"
+          @click="handleDeleteClick(scope.row)"
+        >
+          删除
+        </el-button> -->
+      </template>
+      <!-- 头部具名插槽 -->
+      <template #headerHandle>
+        <el-button type="primary" @click="handleNewClick">
+          {{ headName }}
+        </el-button>
+      </template>
+      <!-- 尾部具名插槽 -->
+      <template #footer></template>
+    </hy-table>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed, ref, watch } from 'vue'
+import { useStore } from '@/store'
+import HyTable from '@/base-ui/table/src/table.vue'
+
+export default defineComponent({
+  components: {
+    HyTable
+  },
+  props: {
+    contentTableConfig: {
+      type: Object,
+      required: true
+    },
+    pageName: {
+      type: String,
+      required: true
+    },
+    headName: {
+      type: String,
+      required: true
+    }
+  },
+  emits: ['handleNewClick', 'handleEditClick'],
+  setup(props, { emit }) {
+    //1、双向绑定
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+
+    //2、监听pageInfo
+    watch(pageInfo, () => {
+      getPageData()
+    })
+
+    //3、发送网络请求
+    const store = useStore()
+    const getPageData = (qureyInfo: any = {}) => {
+      store.dispatch('system/getPageListAction', {
+        pageName: props.pageName,
+        queryInfo: {
+          //查询偏移量
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          //查询的数据条数
+          size: pageInfo.value.pageSize,
+          //根据搜索条件模糊查询
+          ...qureyInfo
+        }
+      })
+    }
+    getPageData()
+
+    //4、删除//编辑//新建
+    //删除
+    const handleDeleteClick = (item: any) => {
+      // console.log(item)
+      store.dispatch('system/deletePageListAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+
+    //新建
+    const handleNewClick = () => {
+      emit('handleNewClick')
+    }
+
+    //编辑
+    //编辑需要回显
+    const handleEditClick = (item: any) => {
+      // console.log(item)
+      emit('handleEditClick', item)
+    }
+
+    //在vuex中获取数据
+    const dataList = computed(() =>
+      store.getters[`system/pageListData`](props.pageName)
+    )
+    const listCount = computed(() =>
+      store.getters[`system/pageListCount`](props.pageName)
+    )
+    return {
+      dataList,
+      listCount,
+      pageInfo,
+      getPageData,
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
+    }
+  }
+})
+</script>
+
+<style scoped lang="less">
+.page-content {
+  padding: 20px 20px;
+  border-top: 20px solid #f5f5f5;
+}
+</style>
