@@ -63,7 +63,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListData(state) {
       return (pageName: string) => {
         switch (pageName) {
-          case 'user':
+          case 'users':
             return state.userList
           case 'role':
             return state.roleList
@@ -79,7 +79,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListCount(state) {
       return (pageName: string) => {
         switch (pageName) {
-          case 'user':
+          case 'users':
             return state.userCount
           case 'role':
             return state.roleCount
@@ -100,7 +100,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageName = payload.pageName
       let pageUrl = ''
       switch (pageName) {
-        case 'user':
+        case 'users':
           pageUrl = '/users/list'
           break
         case 'role':
@@ -119,12 +119,13 @@ const systemModule: Module<ISystemState, IRootState> = {
 
       //2、对页面发送请求   不要粗心
       const pageResult = await getPagelistData(pageUrl, payload.queryInfo)
+      // console.log(pageResult.data)
 
       //3、提交mutations  存储数据
       //解构
       const { list, totalCount } = pageResult.data
       switch (pageName) {
-        case 'user':
+        case 'users':
           commit('changeUserList', list)
           commit('changeUserCount', totalCount)
           break
@@ -150,10 +151,10 @@ const systemModule: Module<ISystemState, IRootState> = {
     async deletePageListAction({ dispatch }, payload: any) {
       //1、获取pageUrl
       const { pageName, id } = payload
-      console.log(id)
+      // console.log(id)
       let pageUrl = ''
       switch (pageName) {
-        case 'user':
+        case 'users':
           pageUrl = `/users/${id}`
           break
         case 'role':
@@ -188,7 +189,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const { pageName, creatData } = payload
       let pageUrl = ''
       switch (pageName) {
-        case 'user':
+        case 'users':
           pageUrl = '/users'
           break
         case 'role':
@@ -220,7 +221,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const { pageName, editData, id } = payload
       let pageUrl = ''
       switch (pageName) {
-        case 'user':
+        case 'users':
           pageUrl = `/users/${id}`
           break
         case 'role':

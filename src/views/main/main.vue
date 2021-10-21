@@ -8,7 +8,10 @@
         <el-header class="page-header">
           <nav-header @foldChange="foldChange"></nav-header>
         </el-header>
-        <el-main class="page-content"> <router-view></router-view> </el-main>
+        <el-main class="page-content">
+          <!-- main的第二层路由占位-->
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

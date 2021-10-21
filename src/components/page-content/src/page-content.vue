@@ -12,6 +12,7 @@
           {{ scope.row.status ? '禁用' : '启用' }}
         </el-button>
       </template>
+
       <!-- 时间格式化 -->
       <template #createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
@@ -19,6 +20,7 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
+      <!-- 图片 显示-->
       <template #image="scope">
         <el-image
           style="width: 60px; height: 60px"
@@ -28,7 +30,11 @@
         </el-image>
       </template>
       <template #handle="scope">
-        <el-button size="mini" @click="handleEditClick(scope.row)">
+        <el-button
+          size="mini"
+          @click="handleEditClick(scope.row)"
+          v-if="isUpdate"
+        >
           编辑
         </el-button>
         <el-popconfirm
@@ -40,20 +46,15 @@
           @confirm="handleDeleteClick(scope.row)"
         >
           <template #reference>
-            <el-button size="mini" type="danger"> 删除 </el-button>
+            <el-button size="mini" type="danger" v-if="isDelete">
+              删除
+            </el-button>
           </template>
         </el-popconfirm>
-        <!-- <el-button
-          size="mini"
-          type="danger"
-          @click="handleDeleteClick(scope.row)"
-        >
-          删除
-        </el-button> -->
       </template>
-      <!-- 头部具名插槽 -->
+      <!-- 头部具名插槽  新建-->
       <template #headerHandle>
-        <el-button type="primary" @click="handleNewClick">
+        <el-button type="primary" @click="handleNewClick" v-if="isCreate">
           {{ headName }}
         </el-button>
       </template>
@@ -67,6 +68,7 @@
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import HyTable from '@/base-ui/table/src/table.vue'
+import { usePermission } from '@/hooks/use-permission'
 
 export default defineComponent({
   components: {
@@ -88,6 +90,13 @@ export default defineComponent({
   },
   emits: ['handleNewClick', 'handleEditClick'],
   setup(props, { emit }) {
+    //获取按钮的权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
+    console.log(isCreate, isUpdate, isDelete, isQuery)
+
     //1、双向绑定
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
 
@@ -99,6 +108,7 @@ export default defineComponent({
     //3、发送网络请求
     const store = useStore()
     const getPageData = (qureyInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -135,7 +145,7 @@ export default defineComponent({
       emit('handleEditClick', item)
     }
 
-    //在vuex中获取数据
+    //获取vuex数据
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
@@ -149,7 +159,10 @@ export default defineComponent({
       getPageData,
       handleDeleteClick,
       handleNewClick,
-      handleEditClick
+      handleEditClick,
+      isCreate,
+      isUpdate,
+      isDelete
     }
   }
 })

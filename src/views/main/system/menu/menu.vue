@@ -4,8 +4,6 @@
       :contentTableConfig="contentTableConfig"
       pageName="menu"
       headName="新建菜单"
-      @handleNewClick="handleNewData"
-      @handleEditClick="handleEditData"
     ></page-content>
   </div>
 </template>

@@ -8,7 +8,7 @@ export function usePageModal(handleNew?: any, handleEdit?: any) {
   //新建
   const handleNewData = () => {
     defaultValue.value = {}
-    console.log('新建')
+    // console.log('新建')
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true
     }
@@ -21,7 +21,7 @@ export function usePageModal(handleNew?: any, handleEdit?: any) {
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true
     }
-    console.log('点击了编辑按钮')
+    // console.log('点击了编辑按钮')
     handleEdit && handleEdit(item)
   }
   return [pageModalRef, defaultValue, handleNewData, handleEditData]

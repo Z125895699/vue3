@@ -46,7 +46,7 @@ const store = createStore<IRootState>({
         size: 1000
       })
       const { list: menuList } = menuResult.data
-      //2、保存数据到state
+      //2、保存数据到mutations
       commit('changeDepartmentList', dapartmentList)
       commit('changeRoleList', roleList)
       commit('changeMenuList', menuList)
@@ -60,12 +60,13 @@ const store = createStore<IRootState>({
   }
 })
 
-//刷新的时候 防止vuex的数据会丢失
+//刷新的时候 防止vuex的数据会丢失 vuex数据持久化
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
   store.dispatch('getInitialDataAction')
 }
 
+//ts和vuex的搭配使用
 export function useStore(): Store<IStoreType> {
   return useVuexStore()
 }

@@ -1,4 +1,4 @@
-const path = require('path')
+// const path = require('path')
 
 //通过commonJs导出
 module.exports = {

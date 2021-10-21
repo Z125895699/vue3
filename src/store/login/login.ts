@@ -3,7 +3,7 @@ import { Module } from 'vuex'
 import { ILoginState } from './type'
 import { IRootState } from '../type'
 import localcache from '@/utils/cache'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 
 import router from '@/router'
 
@@ -19,7 +19,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   mutations: {
@@ -34,12 +35,16 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       //userMenus => routes   得到所有的路由配置
       const routes = mapMenusToRoutes(userMenus)
-      // console.log(routes)
 
       //将routes =>router.main.children 动态添加路由
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      //获取用户的按钮权限
+      const permissions = mapMenusToPermissions(userMenus)
+      console.log(permissions)
+      state.permissions = permissions
     }
   },
   actions: {
@@ -67,7 +72,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       router.push('/main')
     },
 
-    //刷新的时候 防止vuex的数据会丢失
+    // 防止vuex的数据会丢失
     loadLocalLogin({ commit }) {
       const token = localcache.getCache('token')
       if (token) {

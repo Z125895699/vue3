@@ -21,7 +21,6 @@ class HYRequest {
     this.showLoading = config.showLoading ?? DEAFULT_LOADING
     this.interceptors = config.interceptors
 
-    // 使用拦截器
     // 1.从config中取出的拦截器是对应的实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,

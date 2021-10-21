@@ -16,6 +16,7 @@ export default function (el: HTMLElement) {
     echartInstance.resize()
   }
 
+  //响应式布局
   window.addEventListener('resize', () => {
     echartInstance.resize()
   })

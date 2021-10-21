@@ -19,8 +19,9 @@ const routes: RouteRecordRaw[] = [
     path: '/main',
     name: 'main',
     component: () => import('@/views/main/main.vue')
-    //children :[] 根据userMenus决定  children
+    //children :[] 根据userMenus决定
   },
+
   //NotFound
   {
     //.*任意字符

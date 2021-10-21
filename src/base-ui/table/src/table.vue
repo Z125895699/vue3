@@ -17,7 +17,7 @@
     >
       <!-- 根据外部的配置是否显示 -->
       <el-table-column
-        v-if="showIndexColumn"
+        v-if="showSelectColumn"
         type="selection"
         align="center"
       ></el-table-column>
@@ -25,6 +25,7 @@
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <!-- 动态插槽  插槽名是传进来配置的slotName-->
+            <!-- 作用域插槽 -->
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
             </slot>
@@ -68,7 +69,7 @@ export default defineComponent({
       type: Array,
       required: true
     },
-    showIndexColumn: {
+    showSelectColumn: {
       type: Boolean,
       default: false
     },

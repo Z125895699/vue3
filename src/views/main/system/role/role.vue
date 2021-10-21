@@ -17,6 +17,7 @@
       ref="pageModalRef"
       :otherInfo="otherInfoRef"
       pageName="role"
+      headName="新建角色"
       :defaultValue="defaultValue"
     >
       <div class="menuTree">
@@ -59,7 +60,7 @@ export default defineComponent({
   },
   name: 'role',
   setup() {
-    //处理hook的回调  编辑回显
+    //处理hook的回调  编辑回显  eltree树形
     const elTreeRef = ref<InstanceType<typeof ElTree>>()
     const handleEdit = (item: any) => {
       const leafKeys = leafMunuMapKeys(item.menuList)
@@ -74,6 +75,8 @@ export default defineComponent({
 
     const store = useStore()
     const otherInfoRef = ref({})
+
+    //tree数据
     const menus = computed(() => {
       return store.state.menuList
     })

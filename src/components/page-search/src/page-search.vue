@@ -1,7 +1,9 @@
 <template>
   <hy-form v-bind="searchFormConfig" v-model="formData"></hy-form>
   <div class="handle-btns">
+    <!-- 重置按钮 -->
     <el-button icon="el-icon-refresh" @click="handleResetClick">重置</el-button>
+    <!-- 搜索按钮 -->
     <el-button type="primary" icon="el-icon-search" @click="handleQueryClick">
       搜索
     </el-button>
@@ -33,14 +35,15 @@ export default defineComponent({
     }
     const formData = ref(formOrignData)
 
-    //2、优化监听重置点击
+    //2、优化重置点击
     const handleResetClick = () => {
-      console.log('重置')
       // formData.value = formOrignData
       for (const key in formOrignData) {
-        //对对象的值做修改  而不是复制
+        //对象的值做修改  而不是复制
         formData.value[`${key}`] = formOrignData[key]
       }
+      //重新请求数据
+      emit('queryClick')
     }
 
     //3、优化搜索点击

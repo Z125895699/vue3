@@ -7,7 +7,7 @@
     <page-content
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
-      pageName="user"
+      pageName="users"
       headName="新建用户"
       @handleNewClick="handleNewData"
       @handleEditClick="handleEditData"
@@ -15,8 +15,9 @@
     <page-modal
       :modalConfig="modalConfigRef"
       ref="pageModalRef"
-      pageName="user"
+      pageName="users"
       :defaultValue="defaultValue"
+      headName="新建用户"
     ></page-modal>
   </div>
 </template>

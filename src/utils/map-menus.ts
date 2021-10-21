@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import { IBreadcrumb } from '@/base-ui/breadcrumb'
 
+//保存第一个menu
 let firstMenu: any = null
 
 //权限管理  根据后端返回的菜单提供路由
@@ -11,7 +12,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   //1、先去加载默认所有的routes
   //先把之前创建的routes放在allRoutes中
   const allRoutes: RouteRecordRaw[] = []
-  //第一个参数是路径   第二个参数决定递归   第三个参数是匹配ts文件
+  //require.context(webpack的函数)第一个参数是路径   第二个参数决定递归   第三个参数是匹配ts文件
   const routeFiles = require.context('../router/main', true, /\.ts/)
   routeFiles.keys().forEach((key) => {
     //./product/category/category.ts  做一个切割
@@ -43,7 +44,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
-//面包屑数据
+//面包屑数据   以及菜单的url等于当前的刷新的路径  绑定id值
 export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
   const breadcrumbs: IBreadcrumb[] = []
   pathMapToMenu(userMenus, currentPath, breadcrumbs)
@@ -69,6 +70,7 @@ export function pathMapToMenu(
     }
   }
 }
+
 //面包屑数据
 // export function pathMapBreadcrumbs(userMenus: any[], currentPath: string): any {
 //   const breadcrumbs: IBreadcrumb[] = []
@@ -102,8 +104,25 @@ export function pathMapToMenu(
 //     }
 //   }
 // }
+//用户的按钮权限数据
+export function mapMenusToPermissions(userMenus: any[]) {
+  const permissions: string[] = []
 
-//菜单列表的叶子节点
+  const _recurseGetPermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+
+  return permissions
+}
+
+//菜单列表的叶子节点  eltree的递归
 export function leafMunuMapKeys(menusList: any[]) {
   const leafKeys: number[] = []
   const _recurseGetLeaf = (menuList: any[]) => {

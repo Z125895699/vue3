@@ -1,7 +1,11 @@
 <template>
   <div class="department">
-    <page-search :searchFormConfig="searchFormConfig"></page-search>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @queryClick="queryClick"
+    ></page-search>
     <page-content
+      ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       pageName="department"
       @handleNewClick="handleNewData"
@@ -12,6 +16,7 @@
       :modalConfig="modalConfig"
       ref="pageModalRef"
       pageName="department"
+      headName="新建部门"
       :defaultValue="defaultValue"
     ></page-modal>
   </div>
@@ -28,6 +33,7 @@ import { searchFormConfig } from './config/search.config'
 import { contentTableConfig } from './config/content.config'
 import { modalConfig } from './config/modal.config'
 
+import { usePageSearch } from '@/hooks/use-page-search'
 import { usePageModal } from '@/hooks/use-page-modal'
 
 export default defineComponent({
@@ -39,6 +45,7 @@ export default defineComponent({
   name: 'department',
   setup() {
     //调用hook
+    const [pageContentRef, queryClick] = usePageSearch()
     const [pageModalRef, defaultValue, handleNewData, handleEditData] =
       usePageModal()
     return {
@@ -48,7 +55,9 @@ export default defineComponent({
       pageModalRef,
       defaultValue,
       handleNewData,
-      handleEditData
+      handleEditData,
+      pageContentRef,
+      queryClick
     }
   }
 })

@@ -4,7 +4,7 @@ class LocalCache {
     window.localStorage.setItem(key, JSON.stringify(value))
   }
   getCache(key: string) {
-    //obj->string->obj
+    //js对象->json字符串->js对象
     const value = window.localStorage.getItem(key)
     if (value) {
       return JSON.parse(value)

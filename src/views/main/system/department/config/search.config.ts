@@ -14,7 +14,7 @@ export const searchFormConfig = {
       placeholder: '请输入id'
     },
     {
-      field: 'createTime',
+      field: 'createAt',
       type: 'datapicker',
       label: '创建时间',
       placeholder: '请输入创建时间范围'

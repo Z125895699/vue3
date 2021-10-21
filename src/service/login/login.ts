@@ -2,6 +2,7 @@ import hyRequest from '../index'
 
 import { IAccount, IDataType, ILoginResult } from './type'
 
+//枚举
 enum LoginAPI {
   //登录url后缀
   AccountLogin = '/login',

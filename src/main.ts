@@ -97,9 +97,11 @@ for (const compnent of components) {
   app.component(compnent.name, compnent)
 }
 
-//使用插件
+//注册插件
 app.use(store)
+//刷新vuex的数据会丢失 数据没有缓存   先匹配路由
 // app.use(router)
+
 //重新运行都会调用这个方法
 setupStore()
 

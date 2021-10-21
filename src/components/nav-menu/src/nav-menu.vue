@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title" v-if="!isCollapse">Vue3+TS</span>
+      <span class="title" v-if="!isCollapse">后台管理系统</span>
     </div>
     <el-menu
       :default-active="defaultValue"
@@ -64,10 +64,11 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
 
-    //data  //刷新不会跳转
+    //data
     const currentPath = route.path
     const menu = pathMapToMenu(store.state.login.userMenus, currentPath)
-    //绑定menu的id
+
+    //绑定menu的id 刷新的时候绑定菜单id
     const defaultValue = ref(menu.id + '')
 
     //methods  路由跳转  没有用<router-link>

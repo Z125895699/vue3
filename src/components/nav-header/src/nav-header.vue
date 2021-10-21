@@ -17,6 +17,7 @@
           <span class="el-dropdown-link">{{ myNanme }}</span>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item>系统管理</el-dropdown-item>
               <el-dropdown-item>个人信息</el-dropdown-item>
               <el-dropdown-item @click="handleQuitClick">
                 退出登录
