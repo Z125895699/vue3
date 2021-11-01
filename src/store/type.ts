@@ -6,6 +6,7 @@ export interface IRootState {
   departmentList: any[]
   roleList: any[]
   menuList: any[]
+  defaultValue: any
 }
 export interface IRootWithModule {
   login: ILoginState

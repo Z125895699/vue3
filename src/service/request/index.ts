@@ -52,7 +52,6 @@ class HYRequest {
       (res) => {
         // 将loading移除
         this.loading?.close()
-
         const data = res.data
         if (data.returnCode === '-1001') {
           console.log('请求失败~, 错误信息')
@@ -63,7 +62,6 @@ class HYRequest {
       (err) => {
         // 将loading移除
         this.loading?.close()
-
         // 例子: 判断不同的HttpErrorCode显示不同的错误信息
         if (err.response.status === 404) {
           console.log('404的错误~')

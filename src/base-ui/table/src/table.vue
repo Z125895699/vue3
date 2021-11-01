@@ -3,12 +3,15 @@
     <div class="header">
       <!-- 插槽默认值 -->
       <slot name="header">
-        <div class="title">{{ title }}</div>
+        <div class="title">
+          {{ title }}
+        </div>
         <div class="handle">
           <slot name="headerHandle"></slot>
         </div>
       </slot>
     </div>
+
     <el-table
       :data="dataList"
       border
@@ -21,9 +24,10 @@
         type="selection"
         align="center"
       ></el-table-column>
+
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
-          <template #default="scope">
+          <template v-slot:default="scope">
             <!-- 动态插槽  插槽名是传进来配置的slotName-->
             <!-- 作用域插槽 -->
             <slot :name="propItem.slotName" :row="scope.row">
@@ -40,7 +44,7 @@
           v-if="showPagination"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="page.currentPage"
+          :current-page="page.currentPage + 1"
           :page-sizes="[10, 20, 30]"
           :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
@@ -93,9 +97,14 @@ export default defineComponent({
   emits: ['update:page'],
   setup(props, { emit }) {
     const handleSizeChange = (pageSize: number) => {
+      // console.log('改变页数')
       emit('update:page', { ...props.page, pageSize })
     }
     const handleCurrentChange = (currentPage: number) => {
+      // console.log(currentPage)
+
+      //每一页减1为offfset
+      currentPage = currentPage - 1
       emit('update:page', { ...props.page, currentPage })
     }
     return {

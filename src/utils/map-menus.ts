@@ -104,12 +104,12 @@ export function pathMapToMenu(
 //     }
 //   }
 // }
-//用户的按钮权限数据
+//用户的按钮权限数据 递归查询
 export function mapMenusToPermissions(userMenus: any[]) {
   const permissions: string[] = []
 
-  const _recurseGetPermission = (menus: any[]) => {
-    for (const menu of menus) {
+  const _recurseGetPermission = (userMenus: any[]) => {
+    for (const menu of userMenus) {
       if (menu.type === 1 || menu.type === 2) {
         _recurseGetPermission(menu.children ?? [])
       } else if (menu.type === 3) {

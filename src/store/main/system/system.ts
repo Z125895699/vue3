@@ -22,7 +22,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       menuList: [],
       menuCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      storyList: [],
+      storyCount: 0
     }
   },
   mutations: {
@@ -48,6 +50,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     changeMenuList(state, list) {
       state.menuList = list
     },
+
     changeMenuCount(state, totalCount) {
       state.menuCount = totalCount
     },
@@ -56,7 +59,13 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeGoodsCount(state, totalCount) {
       state.goodsCount = totalCount
-      console.log(state.goodsCount)
+      // console.log(state.goodsCount)
+    },
+    changeStoryList(state, list) {
+      state.storyList = list
+    },
+    changeStoryCount(state, totalCount) {
+      state.storyCount = totalCount
     }
   },
   getters: {
@@ -73,6 +82,8 @@ const systemModule: Module<ISystemState, IRootState> = {
             return state.menuList
           case 'goods':
             return state.goodsList
+          case 'story':
+            return state.storyList
         }
       }
     },
@@ -89,6 +100,8 @@ const systemModule: Module<ISystemState, IRootState> = {
             return state.menuCount
           case 'goods':
             return state.goodsCount
+          case 'story':
+            return state.storyCount
         }
       }
     }
@@ -115,6 +128,9 @@ const systemModule: Module<ISystemState, IRootState> = {
         case 'goods':
           pageUrl = '/goods/list'
           break
+        case 'story':
+          pageUrl = '/story/list'
+          break
       }
 
       //2、对页面发送请求   不要粗心
@@ -139,11 +155,16 @@ const systemModule: Module<ISystemState, IRootState> = {
           break
         case 'menu':
           commit('changeMenuList', list)
+          console.log(list)
           commit('changeMenuCount', totalCount)
           break
         case 'goods':
           commit('changeGoodsList', list)
           commit('changeGoodsCount', totalCount)
+          break
+        case 'story':
+          commit('changeStoryList', list)
+          commit('changeStoryCount', totalCount)
           break
       }
     },

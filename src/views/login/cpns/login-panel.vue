@@ -19,9 +19,9 @@
       <el-checkbox v-model="isKeepword">记住密码</el-checkbox>
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button type="primary" class="login-button" @click="handleLoginClick"
-      >立即登录</el-button
-    >
+    <el-button type="primary" class="login-button" @click="handleLoginClick">
+      立即登录
+    </el-button>
   </div>
 </template>
 
@@ -47,12 +47,12 @@ export default defineComponent({
 
     //定义方法
     const handleLoginClick = () => {
-      // console.log('立即登录')
+      console.log('立即登录')
       if (currentTab.value === 'account') {
         accountRef.value?.loginAction(isKeepword.value)
       } else {
         //在phone里写逻辑
-        console.log('phone调用loginAction')
+        // console.log('phone调用loginAction')
       }
     }
 

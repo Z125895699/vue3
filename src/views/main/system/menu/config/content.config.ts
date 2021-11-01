@@ -25,6 +25,6 @@ export const contentTableConfig = {
       children: 'children'
     }
   },
-  showIndexColumn: false,
+  showSelectColumn: false,
   showPagination: false
 }

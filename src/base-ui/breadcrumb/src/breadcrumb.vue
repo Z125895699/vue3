@@ -2,7 +2,7 @@
   <div>
     <el-breadcrumb separator="/">
       <template v-for="item in breadcrumbs" :key="item.name">
-        <el-breadcrumb-item :to="{ path: '/' }">
+        <el-breadcrumb-item>
           {{ item.name }}
         </el-breadcrumb-item>
       </template>

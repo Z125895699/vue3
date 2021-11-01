@@ -2,11 +2,14 @@
   <div class="main">
     <el-container class="main-content">
       <el-aside :width="isCollapse ? '60px' : '210px'">
-        <nav-menu :isCollapse="isCollapse"></nav-menu>
+        <nav-menu :isCollapse="isCollapse" ref="navmenuRef"></nav-menu>
       </el-aside>
       <el-container class="page">
         <el-header class="page-header">
-          <nav-header @foldChange="foldChange"></nav-header>
+          <nav-header
+            @foldChange="foldChange"
+            @selfMessageChange="selfMessageChange"
+          ></nav-header>
         </el-header>
         <el-main class="page-content">
           <!-- main的第二层路由占位-->
@@ -20,6 +23,9 @@
 <script lang="ts">
 import navMenu from '@/components/nav-menu'
 import navHeader from '@/components/nav-header'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 export default {
   components: {
@@ -31,9 +37,22 @@ export default {
     const foldChange = (isFold: boolean) => {
       isCollapse.value = isFold
     }
+
+    const router = useRouter()
+    const store = useStore()
+
+    const navmenuRef = ref<InstanceType<typeof navMenu>>()
+
+    const selfMessageChange = () => {
+      router.push({
+        path: store.state.login.userMenus[3].children[0].url
+      })
+      console.log(store.state.login.userMenus[3].children[0].url)
+    }
     return {
       isCollapse,
-      foldChange
+      foldChange,
+      selfMessageChange
     }
   }
 }

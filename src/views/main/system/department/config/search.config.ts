@@ -1,11 +1,20 @@
-export const searchFormConfig = {
+import { IForm } from '@/base-ui/form'
+
+export const searchFormConfig: IForm = {
   formItems: [
+    // {
+    //   //传入类型  field字段
+    //   field: 'name',
+    //   type: 'input',
+    //   label: '部门名',
+    //   placeholder: '请输入部门名'
+    // },
     {
-      //传入类型  field字段
       field: 'name',
-      type: 'input',
+      type: 'select',
       label: '部门名',
-      placeholder: '请输入部门名'
+      placeholder: '请输入部门名',
+      options: []
     },
     {
       field: 'id',

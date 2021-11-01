@@ -7,21 +7,22 @@
       v-model:page="pageInfo"
     >
       <!-- 列中的插槽 -->
-      <template #status="scope">
+      <template v-slot:status="scope">
         <el-button type="success" size="small" plain>
           {{ scope.row.status ? '禁用' : '启用' }}
         </el-button>
       </template>
 
       <!-- 时间格式化 -->
-      <template #createAt="scope">
+      <template v-slot:createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
-      <template #updateAt="scope">
+      <template v-slot:updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
+
       <!-- 图片 显示-->
-      <template #image="scope">
+      <template v-slot:image="scope">
         <el-image
           style="width: 60px; height: 60px"
           :src="scope.row.imgUrl"
@@ -29,7 +30,8 @@
         >
         </el-image>
       </template>
-      <template #handle="scope">
+
+      <template v-slot:handle="scope">
         <el-button
           size="mini"
           @click="handleEditClick(scope.row)"
@@ -45,21 +47,23 @@
           title="你确定要删除这个吗?"
           @confirm="handleDeleteClick(scope.row)"
         >
-          <template #reference>
+          <template v-slot:reference>
             <el-button size="mini" type="danger" v-if="isDelete">
               删除
             </el-button>
           </template>
         </el-popconfirm>
       </template>
+
       <!-- 头部具名插槽  新建-->
-      <template #headerHandle>
+      <template v-slot:headerHandle>
         <el-button type="primary" @click="handleNewClick" v-if="isCreate">
           {{ headName }}
         </el-button>
       </template>
+
       <!-- 尾部具名插槽 -->
-      <template #footer></template>
+      <template v-slot:footer></template>
     </hy-table>
   </div>
 </template>
@@ -85,7 +89,7 @@ export default defineComponent({
     },
     headName: {
       type: String,
-      required: true
+      default: ''
     }
   },
   emits: ['handleNewClick', 'handleEditClick'],
@@ -95,7 +99,7 @@ export default defineComponent({
     const isUpdate = usePermission(props.pageName, 'update')
     const isDelete = usePermission(props.pageName, 'delete')
     const isQuery = usePermission(props.pageName, 'query')
-    console.log(isCreate, isUpdate, isDelete, isQuery)
+    // console.log(isCreate, isUpdate, isDelete, isQuery)
 
     //1、双向绑定
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
@@ -108,7 +112,9 @@ export default defineComponent({
     //3、发送网络请求
     const store = useStore()
     const getPageData = (qureyInfo: any = {}) => {
-      if (!isQuery) return
+      // if (!isQuery) return
+      // console.log(pageInfo.value.currentPage * pageInfo.value.pageSize)
+
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {

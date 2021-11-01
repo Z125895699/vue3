@@ -13,10 +13,15 @@ const store = createStore<IRootState>({
     return {
       departmentList: [],
       roleList: [],
-      menuList: []
+      menuList: [],
+      defaultValue: ''
     }
   },
   mutations: {
+    changedefaultValue(state, defaultValue) {
+      // console.log(defaultValue)
+      state.defaultValue = defaultValue
+    },
     changeDepartmentList(state, list) {
       state.departmentList = list
     },

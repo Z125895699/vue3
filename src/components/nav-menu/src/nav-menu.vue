@@ -60,16 +60,19 @@ export default defineComponent({
     //store
     const store = useStore()
 
-    //router
+    //router 可写路由对象
     const router = useRouter()
+    //当前路由信息对象 只读路由对象
     const route = useRoute()
 
     //data
     const currentPath = route.path
+
     const menu = pathMapToMenu(store.state.login.userMenus, currentPath)
 
     //绑定menu的id 刷新的时候绑定菜单id
     const defaultValue = ref(menu.id + '')
+    // console.log(defaultValue)
 
     //methods  路由跳转  没有用<router-link>
     const handeItemClick = (subitem: any) => {

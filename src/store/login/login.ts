@@ -4,6 +4,7 @@ import { ILoginState } from './type'
 import { IRootState } from '../type'
 import localcache from '@/utils/cache'
 import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
+import { ElMessage } from 'element-plus'
 
 import router from '@/router'
 
@@ -41,9 +42,9 @@ const loginModule: Module<ILoginState, IRootState> = {
         router.addRoute('main', route)
       })
 
-      //获取用户的按钮权限
+      //获取用户的按钮权限 递归放在数组中
       const permissions = mapMenusToPermissions(userMenus)
-      console.log(permissions)
+      // console.log(permissions)
       state.permissions = permissions
     }
   },
@@ -51,7 +52,12 @@ const loginModule: Module<ILoginState, IRootState> = {
     async accountLoginAction({ commit }, payload: any) {
       //1、实现登录逻辑  请求登录
       const loginResult = await accountLoginRequest(payload)
-      console.log(loginResult)
+      //登录成功才弹出
+      ElMessage.success({
+        message: '恭喜你，登录成功',
+        type: 'success'
+      })
+      // console.log(loginResult)
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localcache.setCache('token', token)

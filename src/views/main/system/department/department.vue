@@ -1,7 +1,7 @@
 <template>
   <div class="department">
     <page-search
-      :searchFormConfig="searchFormConfig"
+      :searchFormConfig="searchFormConfigRef"
       @queryClick="queryClick"
     ></page-search>
     <page-content
@@ -23,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from '@/store'
 
 import PageSearch from '@/components/page-search/src/page-search.vue'
 import PageContent from '@/components/page-content/src/page-content.vue'
@@ -44,12 +45,23 @@ export default defineComponent({
   },
   name: 'department',
   setup() {
+    const store = useStore()
+    const searchFormConfigRef = computed(() => {
+      const departmentItem = searchFormConfig.formItems.find((item) => {
+        return item.field === 'name'
+      })
+      // console.log(departmentItem)
+      departmentItem!.options = store.state.departmentList.map((item) => {
+        return { title: item.name, value: item.name }
+      })
+      return searchFormConfig
+    })
     //调用hook
     const [pageContentRef, queryClick] = usePageSearch()
     const [pageModalRef, defaultValue, handleNewData, handleEditData] =
       usePageModal()
     return {
-      searchFormConfig,
+      searchFormConfigRef,
       contentTableConfig,
       modalConfig,
       pageModalRef,

@@ -17,5 +17,5 @@ export const contentTableConfig = {
     },
     { label: '操作', minWidth: '150', slotName: 'handle' }
   ],
-  showIndexColumn: true
+  showSelectColumn: true
 }

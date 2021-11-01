@@ -37,7 +37,8 @@ import {
   ElDialog,
   ElTree,
   ElCard,
-  ElPopconfirm
+  ElPopconfirm,
+  ElAlert
 } from 'element-plus'
 
 import App from './App.vue'
@@ -80,7 +81,8 @@ const components = [
   ElDialog,
   ElTree,
   ElCard,
-  ElPopconfirm
+  ElPopconfirm,
+  ElAlert
 ]
 
 // import hyRequest from '@/service/index'
