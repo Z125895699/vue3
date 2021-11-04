@@ -155,7 +155,7 @@ const systemModule: Module<ISystemState, IRootState> = {
           break
         case 'menu':
           commit('changeMenuList', list)
-          console.log(list)
+          // console.log(list)
           commit('changeMenuCount', totalCount)
           break
         case 'goods':

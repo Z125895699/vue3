@@ -52,11 +52,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     async accountLoginAction({ commit }, payload: any) {
       //1、实现登录逻辑  请求登录
       const loginResult = await accountLoginRequest(payload)
-      //登录成功才弹出
-      ElMessage.success({
-        message: '恭喜你，登录成功',
-        type: 'success'
+
+      accountLoginRequest(payload).then(() => {
+        //登录成功才弹出
+        ElMessage.success({
+          message: '恭喜你，登录成功',
+          type: 'success'
+        })
       })
+
       // console.log(loginResult)
       const { id, token } = loginResult.data
       commit('changeToken', token)
