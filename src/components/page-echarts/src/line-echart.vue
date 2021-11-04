@@ -33,12 +33,13 @@ export default defineComponent({
         title: {
           text: props.title
         },
+        //鼠标悬浮
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#6a7985'
+              backgroundColor: 'red'
             }
           }
         },
@@ -71,9 +72,13 @@ export default defineComponent({
             name: '分别销量',
             type: 'line',
             stack: '总量',
+            //折线图的填充区域
             areaStyle: {},
             emphasis: {
-              focus: 'series'
+              focus: 'series',
+              label: {
+                show: true
+              }
             },
             data: props.values
           }

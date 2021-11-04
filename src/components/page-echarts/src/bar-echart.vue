@@ -34,14 +34,17 @@ export default defineComponent({
         xAxis: {
           data: props.xLabels,
           axisLabel: {
-            inside: true,
-            color: '#fff'
+            inside: false,
+            color: 'black'
           },
+          //刻度
           axisTick: {
             show: false
           },
+          //轴线
           axisLine: {
             show: false
+            // symbol: 'arrow'
           },
           z: 10
         },
@@ -68,11 +71,11 @@ export default defineComponent({
             //设置渐变色
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#a90000' },
-                { offset: 0.5, color: '#188df0' },
-                { offset: 1, color: '#188df0' }
+                { offset: 0, color: 'red' }, //0%处的颜色为红色
+                { offset: 1, color: 'blue' }
               ])
             },
+            //鼠标悬停的高亮
             emphasis: {
               itemStyle: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

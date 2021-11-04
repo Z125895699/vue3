@@ -37,6 +37,7 @@ export default defineComponent({
             type: 'pie',
             radius: [10, 100],
             center: ['50%', '50%'],
+            //设置玫瑰图
             roseType: 'area',
             itemStyle: {
               borderRadius: 8

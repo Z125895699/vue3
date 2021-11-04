@@ -28,7 +28,6 @@ const hyRequest = new HYRequest({
     responseInterceptor: (res) => {
       //在响应成功之后做的事
       // console.log('响应成功的拦截')
-
       return res
     },
     responseInterceptorCatch: (err) => {
