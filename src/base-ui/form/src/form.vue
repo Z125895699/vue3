@@ -5,7 +5,11 @@
         <!-- 遍历formItems -->
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="collLayout">
-            <el-form-item :label="item.label" v-if="!item.isHidden">
+            <el-form-item
+              :label="item.label"
+              v-if="!item.isHidden"
+              :prop="item.field"
+            >
               <!-- 判断类型是否为输入框-->
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
@@ -54,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref } from 'vue'
+import { defineComponent, watch, ref, reactive } from 'vue'
 
 export default defineComponent({
   props: {

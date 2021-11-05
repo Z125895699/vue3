@@ -68,7 +68,7 @@ const store = createStore<IRootState>({
 //刷新的时候 防止vuex的数据会丢失 vuex数据持久化
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  store.dispatch('getInitialDataAction')
+  // store.dispatch('getInitialDataAction')
 }
 
 //ts和vuex的搭配使用

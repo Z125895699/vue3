@@ -47,7 +47,7 @@ export default defineComponent({
 
     //定义方法
     const handleLoginClick = () => {
-      console.log('立即登录')
+      // console.log('立即登录')
       if (currentTab.value === 'account') {
         accountRef.value?.loginAction(isKeepword.value)
       } else {
