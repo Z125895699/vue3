@@ -7,6 +7,7 @@ import { getPagelistData } from '@/service/main/system/system'
 import login from './login/login'
 import system from './main/system/system'
 import dashboard from './main/analysis/dashboard'
+import localcache from '@/utils/cache'
 
 const store = createStore<IRootState>({
   state() {
@@ -68,8 +69,13 @@ const store = createStore<IRootState>({
 //刷新的时候 防止vuex的数据会丢失 vuex数据持久化
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  // store.dispatch('getInitialDataAction')
 }
+
+const token = localcache.getCache('token')
+if (token) {
+  store.dispatch('getInitialDataAction')
+}
+// store.dispatch('getInitialDataAction')
 
 //ts和vuex的搭配使用
 export function useStore(): Store<IStoreType> {
