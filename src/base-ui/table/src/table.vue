@@ -102,7 +102,6 @@ export default defineComponent({
     }
     const handleCurrentChange = (currentPage: number) => {
       // console.log(currentPage)
-
       //每一页减1为offfset
       currentPage = currentPage - 1
       emit('update:page', { ...props.page, currentPage })
