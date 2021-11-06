@@ -2,6 +2,7 @@ import * as echarts from 'echarts'
 
 import chinaMapData from '../data/china.json'
 
+//注册地图
 echarts.registerMap('china', chinaMapData)
 
 export default function (el: HTMLElement) {

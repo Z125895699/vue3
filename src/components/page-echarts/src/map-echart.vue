@@ -6,9 +6,9 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import BaseEchart from '@/base-ui/echart'
-import { IDataType } from '../types'
 
 import { convertData } from '../utils/convert-data'
+import { data } from '../utils/data'
 
 export default defineComponent({
   components: {
@@ -58,12 +58,14 @@ export default defineComponent({
             color: '#fff'
           }
         },
+        //geo方式地理坐标系组件
         geo: {
           map: 'china',
-          roam: 'scale',
+          roam: 'scale', //是否允许缩放
+          //选中状态下的标签样式
           emphasis: {
             areaColor: '#f4cccc',
-            borderColor: 'rgb(9, 54, 95)',
+            borderColor: 'rgb(9, 54, 95)', //省市边界线
             itemStyle: {
               areaColor: '#f4cccc'
             }
@@ -74,7 +76,7 @@ export default defineComponent({
             name: '销量',
             type: 'scatter',
             coordinateSystem: 'geo',
-            data: convertData(props.mapData),
+            data: convertData(data),
             symbolSize: 12,
             emphasis: {
               itemStyle: {
@@ -87,9 +89,9 @@ export default defineComponent({
             type: 'map',
             map: 'china',
             geoIndex: 0,
-            aspectScale: 0.75,
+            aspectScale: 0.75, //长宽比
             tooltip: {
-              show: false
+              show: true
             }
           }
         ]
