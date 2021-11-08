@@ -37,17 +37,26 @@ export default defineComponent({
         tooltip: {
           trigger: 'item',
           formatter: function (params: any) {
-            return params.name + ' : ' + params.value[2]
+            // console.log(params.value[2])
+            return params.value[2]
+              ? `${params.name}:${params.value[2]}`
+              : `${params.name}`
+            // return `${params.name}:${params.value[2]} ?? ''`
+            // return params.name + ' : ' + params.value[2]
           }
         },
+
+        //视觉映射组件
         visualMap: {
           min: 0,
-          max: 60000,
-          left: 20,
-          bottom: 20,
-          calculable: true,
+          max: 100,
+          left: -5,
+          bottom: -5,
+          // calculable: true,
           text: ['高', '低'],
+          //选中范围内的视觉元素
           inRange: {
+            // symbolSize: [30, 100],
             color: [
               'rgb(70, 240, 252)',
               'rgb(250, 220, 46)',
@@ -55,7 +64,7 @@ export default defineComponent({
             ]
           },
           textStyle: {
-            color: '#fff'
+            color: 'red'
           }
         },
         //geo方式地理坐标系组件
