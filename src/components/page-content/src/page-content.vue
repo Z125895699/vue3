@@ -111,7 +111,7 @@ export default defineComponent({
 
     //3、发送网络请求
     const store = useStore()
-    const getPageData = (qureyInfo: any = {}) => {
+    const getPageData = (queryInfo: any = {}) => {
       // if (!isQuery) return
       // console.log(pageInfo.value.currentPage * pageInfo.value.pageSize)
 
@@ -123,7 +123,7 @@ export default defineComponent({
           //查询的数据条数
           size: pageInfo.value.pageSize,
           //根据搜索条件模糊查询
-          ...qureyInfo
+          ...queryInfo
         }
       })
     }

@@ -133,7 +133,7 @@ const systemModule: Module<ISystemState, IRootState> = {
           break
       }
 
-      //2、对页面发送请求   不要粗心
+      //2、页面发送请求
       const pageResult = await getPagelistData(pageUrl, payload.queryInfo)
       // console.log(pageResult.data)
 
