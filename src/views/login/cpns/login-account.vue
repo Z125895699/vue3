@@ -18,6 +18,8 @@ import rules from '../config/account-config'
 import localcache from '@/utils/cache'
 import { useStore } from 'vuex'
 
+import { ElMessage } from 'element-plus'
+
 export default defineComponent({
   setup() {
     const store = useStore()
@@ -33,6 +35,8 @@ export default defineComponent({
       //验证登录逻辑通过  validate校验表单 如果表单验证都通过 返回valid
       formRef.value?.validate((valid) => {
         if (valid) {
+          console.log(valid)
+
           //1、判断是否需要记住密码
           if (isKeepword) {
             //本地缓存

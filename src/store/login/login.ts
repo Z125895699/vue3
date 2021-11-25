@@ -54,7 +54,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       const loginResult = await accountLoginRequest(payload)
 
       accountLoginRequest(payload).then(() => {
-        //登录成功才弹出
+        // 登录成功才弹出
         ElMessage.success({
           message: '恭喜你，登录成功',
           type: 'success'
