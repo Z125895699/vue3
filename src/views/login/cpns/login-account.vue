@@ -36,7 +36,6 @@ export default defineComponent({
       formRef.value?.validate((valid) => {
         if (valid) {
           console.log(valid)
-
           //1、判断是否需要记住密码
           if (isKeepword) {
             //本地缓存
