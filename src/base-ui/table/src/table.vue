@@ -11,7 +11,6 @@
         </div>
       </slot>
     </div>
-
     <el-table
       :data="dataList"
       border
@@ -24,7 +23,6 @@
         type="selection"
         align="center"
       ></el-table-column>
-
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template v-slot:default="scope">
@@ -96,14 +94,19 @@ export default defineComponent({
   },
   emits: ['update:page'],
   setup(props, { emit }) {
+    // console.log('dataList:', props.dataList)
+
+    //切换页数
     const handleSizeChange = (pageSize: number) => {
-      // console.log('改变页数')
+      console.log('改变页数')
       emit('update:page', { ...props.page, pageSize })
     }
+    //跳转页数
     const handleCurrentChange = (currentPage: number) => {
-      // console.log(currentPage)
+      // console.log('111:', currentPage)
       //每一页减1为offfset
       currentPage = currentPage - 1
+      console.log('111:', currentPage)
       emit('update:page', { ...props.page, currentPage })
     }
     return {

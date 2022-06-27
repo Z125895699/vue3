@@ -2,6 +2,7 @@ import { Module } from 'vuex'
 
 import { ILoginState } from './type'
 import { IRootState } from '../type'
+import { IAccount } from '../../service/login/type'
 import localcache from '@/utils/cache'
 import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 import { ElMessage } from 'element-plus'
@@ -37,7 +38,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       //userMenus => routes   得到所有的路由配置
       const routes = mapMenusToRoutes(userMenus)
 
-      //将routes =>router.main.children 动态添加路由
+      // //将routes =>router.main.children 动态添加路由
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
@@ -49,9 +50,10 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: any) {
+    async accountLoginAction({ commit }, payload: IAccount) {
       //1、实现登录逻辑  请求登录
       const loginResult = await accountLoginRequest(payload)
+      console.log(loginResult.data)
 
       accountLoginRequest(payload).then(() => {
         // 登录成功才弹出

@@ -17,7 +17,6 @@
       ref="pageModalRef"
       :otherInfo="otherInfoRef"
       pageName="role"
-      headName="新建角色"
       :defaultValue="defaultValue"
     >
       <div class="menuTree">
@@ -60,6 +59,8 @@ export default defineComponent({
   },
   name: 'role',
   setup() {
+    const headName = ref('角色')
+
     //处理hook的回调  编辑回显  eltree树形
     const elTreeRef = ref<InstanceType<typeof ElTree>>()
     const handleEdit = (item: any) => {
@@ -71,7 +72,7 @@ export default defineComponent({
 
     const [pageContentRef, queryClick] = usePageSearch()
     const [pageModalRef, defaultValue, handleNewData, handleEditData] =
-      usePageModal(undefined, handleEdit)
+      usePageModal(undefined, handleEdit, headName)
 
     const store = useStore()
     const otherInfoRef = ref({})

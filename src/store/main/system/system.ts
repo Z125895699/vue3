@@ -18,6 +18,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       roleList: [],
       roleCount: 0,
       departmentList: [],
+      departmentItemName: [],
       departmentCount: 0,
       menuList: [],
       menuCount: 0,
@@ -42,7 +43,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       state.roleCount = totalCount
     },
     changeDepartMentList(state, list) {
+      // console.log('list:', list)
       state.departmentList = list
+    },
+    changedepartmentItemName(state, departmentItemName) {
+      state.departmentItemName = departmentItemName
     },
     changeDepartMentCount(state, totalCount) {
       state.departmentCount = totalCount
@@ -50,7 +55,6 @@ const systemModule: Module<ISystemState, IRootState> = {
     changeMenuList(state, list) {
       state.menuList = list
     },
-
     changeMenuCount(state, totalCount) {
       state.menuCount = totalCount
     },
@@ -137,7 +141,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageResult = await getPagelistData(pageUrl, payload.queryInfo)
       // console.log(pageResult.data)
 
-      //3、提交mutations  存储数据
+      //3、提交mutations
       //解构
       const { list, totalCount } = pageResult.data
       switch (pageName) {

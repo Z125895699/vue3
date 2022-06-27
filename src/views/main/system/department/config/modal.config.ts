@@ -15,12 +15,6 @@ export const modalConfig: IForm = {
       label: 'leader',
       placeholder: '请输入leader'
     }
-    // {
-    //   field: 'parentId',
-    //   type: 'input',
-    //   label: 'parentId',
-    //   placeholder: '请输入parentId'
-    // }
   ],
   collLayout: { span: 24 }
 }

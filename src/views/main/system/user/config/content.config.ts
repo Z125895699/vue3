@@ -2,6 +2,13 @@ export const contentTableConfig = {
   title: '用户列表',
   propList: [
     { prop: 'name', label: '用户名', minWidth: '60' },
+    {
+      prop: 'departmentId',
+      label: '所属部门',
+      minWidth: '60',
+      slotName: 'departmentId'
+    },
+    { prop: 'roleId', label: '所属角色', minWidth: '60', slotName: 'roleId' },
     { prop: 'realname', label: '真实姓名', minWidth: '100' },
     { prop: 'cellphone', label: '电话号码', minWidth: '150' },
     { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },

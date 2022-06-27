@@ -6,7 +6,7 @@
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
     >
-      <!-- 列中的插槽 -->
+      <!-- 列的插槽 -->
       <template v-slot:status="scope">
         <el-button type="success" size="small" plain>
           {{ scope.row.status ? '禁用' : '启用' }}
@@ -21,7 +21,26 @@
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
 
-      <!-- 图片 显示-->
+      <template v-slot:departmentId="scope">
+        <p>{{ departmentItemName[scope.row.departmentId - 1] }}</p>
+        <!-- <p v-if="scope.row.departmentId === 1">总裁办</p>
+        <p v-if="scope.row.departmentId === 2">研发部</p>
+        <p v-if="scope.row.departmentId === 3">运营部</p>
+        <p v-if="scope.row.departmentId === 4">客服</p>
+        <p v-if="scope.row.departmentId === 5">人事</p> -->
+      </template>
+
+      <!-- 所属角色 -->
+      <template v-slot:roleId="scope">
+        <p>{{ roleItemName[scope.row.roleId - 1] }}</p>
+        <!-- <p v-if="scope.row.roleId === 1">总裁办</p>
+        <p v-if="scope.row.roleId === 2">研发部</p>
+        <p v-if="scope.row.roleId === 3">运营部</p>
+        <p v-if="scope.row.roleId === 4">客服</p>
+        <p v-if="scope.row.roleId === 5">人事</p> -->
+      </template>
+
+      <!-- 图片显示-->
       <template v-slot:image="scope">
         <el-image
           style="width: 60px; height: 60px"
@@ -31,6 +50,7 @@
         </el-image>
       </template>
 
+      <!-- 操作 -->
       <template v-slot:handle="scope">
         <el-button
           size="mini"
@@ -69,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from 'vue'
+import { defineComponent, computed, ref, watch, reactive } from 'vue'
 import { useStore } from '@/store'
 import HyTable from '@/base-ui/table/src/table.vue'
 import { usePermission } from '@/hooks/use-permission'
@@ -79,6 +99,14 @@ export default defineComponent({
     HyTable
   },
   props: {
+    departmentItemName: {
+      type: Object,
+      default: () => ({})
+    },
+    roleItemName: {
+      type: Object,
+      default: () => ({})
+    },
     contentTableConfig: {
       type: Object,
       required: true
@@ -101,20 +129,23 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, 'query')
     // console.log(isCreate, isUpdate, isDelete, isQuery)
 
-    //1、双向绑定
+    //1、双向绑定pageInfos
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
-
     //2、监听pageInfo
-    watch(pageInfo, () => {
-      getPageData()
-    })
+    //需要深度监听
+    watch(
+      () => pageInfo,
+      () => {
+        getPageData()
+      },
+      { deep: true }
+    )
 
     //3、发送网络请求
     const store = useStore()
     const getPageData = (queryInfo: any = {}) => {
       // if (!isQuery) return
-      // console.log(pageInfo.value.currentPage * pageInfo.value.pageSize)
-
+      console.log(pageInfo.value.currentPage * pageInfo.value.pageSize)
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -128,6 +159,10 @@ export default defineComponent({
       })
     }
     getPageData()
+    // const departmentNameList = reactive(props.departmentItemName)
+    // console.log('传值departmentItemName:', props.departmentItemName)
+    // const roleNameList = reactive(props.roleItemName)
+    // console.log('传值roleItemName:', props.roleItemName)
 
     //4、删除//编辑//新建
     //删除
@@ -145,7 +180,6 @@ export default defineComponent({
     }
 
     //编辑
-    //编辑需要回显
     const handleEditClick = (item: any) => {
       // console.log(item)
       emit('handleEditClick', item)
@@ -155,9 +189,11 @@ export default defineComponent({
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
+    // console.log('dataList:', dataList.value)
     const listCount = computed(() =>
       store.getters[`system/pageListCount`](props.pageName)
     )
+
     return {
       dataList,
       listCount,

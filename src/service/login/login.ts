@@ -11,7 +11,7 @@ enum LoginAPI {
   //角色url后缀
   UserMenus = '/role/' // 用法: role/1/menu
 }
-
+//登录
 export function accountLoginRequest(account: IAccount) {
   return hyRequest.post<IDataType<ILoginResult>>({
     url: LoginAPI.AccountLogin,

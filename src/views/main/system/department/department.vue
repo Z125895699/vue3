@@ -16,14 +16,13 @@
       :modalConfig="modalConfig"
       ref="pageModalRef"
       pageName="department"
-      headName="新建部门"
       :defaultValue="defaultValue"
     ></page-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store'
 
 import PageSearch from '@/components/page-search/src/page-search.vue'
@@ -45,6 +44,7 @@ export default defineComponent({
   },
   name: 'department',
   setup() {
+    const headName = ref('部门')
     const store = useStore()
     const searchFormConfigRef = computed(() => {
       const departmentItem = searchFormConfig.formItems.find((item) => {
@@ -59,7 +59,7 @@ export default defineComponent({
     //调用hook
     const [pageContentRef, queryClick] = usePageSearch()
     const [pageModalRef, defaultValue, handleNewData, handleEditData] =
-      usePageModal()
+      usePageModal(undefined, undefined, headName)
     return {
       searchFormConfigRef,
       contentTableConfig,

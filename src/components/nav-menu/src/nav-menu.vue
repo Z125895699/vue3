@@ -12,19 +12,17 @@
       :collapse="isCollapse"
     >
       <template v-for="item in $store.state.login.userMenus" :key="item.id">
-        <!-- 二级菜单 -->
         <template v-if="item.type === 1">
           <el-sub-menu :index="item.id + ''">
-            <!-- 二级菜单的父菜单 -->
             <template #title>
               <i v-if="item.icon" :class="item.icon"></i>
               <span>{{ item.name + '' }}</span>
             </template>
-            <!-- 二级菜单的子菜单 -->
             <template v-for="subitem in item.children" :key="subitem.id">
               <el-menu-item
-                :index="subitem.id + ''"
+                :index="subitem.url"
                 @click="handeItemClick(subitem)"
+                :route="`${subitem.url}`"
               >
                 <i v-if="subitem.icon" :class="item.icon"></i>
                 <span>{{ subitem.name + '' }}</span>
@@ -32,9 +30,8 @@
             </template>
           </el-sub-menu>
         </template>
-        <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
-          <el-menu-item :index="item.id + ''">
+          <el-menu-item :index="item.url" :route="`${item.url}`">
             <i v-if="item.icon" :class="item.icon"></i>
             <span>{{ item.name }}</span>
           </el-menu-item>
@@ -68,11 +65,16 @@ export default defineComponent({
     //data
     const currentPath = route.path
 
-    const menu = pathMapToMenu(store.state.login.userMenus, currentPath)
+    // const menu = pathMapToMenu(store.state.login.userMenus, currentPath)
 
     //绑定menu的id 刷新的时候绑定菜单id
-    const defaultValue = ref(menu.id + '')
-    // console.log(defaultValue)
+    const defaultValue = ref(currentPath)
+    // const defaultValue = ref(menu.id + '')
+    // console.log(menu)
+
+    // console.log(defaultValue.value)
+
+    // console.log(currentPath)
 
     //methods  路由跳转  没有用<router-link>
     const handeItemClick = (subitem: any) => {

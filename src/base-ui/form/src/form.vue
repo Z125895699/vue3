@@ -14,7 +14,6 @@
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
-                <!-- v-model绑定字段 -->
                 <el-input
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
@@ -30,10 +29,11 @@
                 >
                   <el-option
                     v-for="option in item.options"
+                    :label="option.title"
                     :value="option.value"
                     :key="option.value"
                   >
-                    {{ option.title }}
+                    {{ option.value }}
                   </el-option>
                 </el-select>
               </template>
@@ -85,11 +85,11 @@ export default defineComponent({
   setup(props, { emit }) {
     //是对props的modelValue的一个拷贝  不会产生依赖
     const formData = ref({ ...props.modelValue })
+    // console.log('formData:', formData.value)
 
     watch(
       formData,
       (newValue) => {
-        // console.log(newValue)
         emit('update:modelValue', newValue)
       },
       {

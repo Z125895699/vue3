@@ -66,6 +66,7 @@ export function pathMapToMenu(
         return findMenu
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
+      // console.log(menu)
       return menu
     }
   }
@@ -104,6 +105,7 @@ export function pathMapToMenu(
 //     }
 //   }
 // }
+
 //用户的按钮权限数据 递归查询
 export function mapMenusToPermissions(userMenus: any[]) {
   const permissions: string[] = []

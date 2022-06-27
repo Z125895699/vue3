@@ -4,6 +4,7 @@ export interface ISystemState {
   roleList: any[]
   roleCount: number
   departmentList: any[]
+  departmentItemName: any[]
   departmentCount: number
   menuList: any[]
   menuCount: number

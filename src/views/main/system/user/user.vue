@@ -9,6 +9,8 @@
       :contentTableConfig="contentTableConfig"
       pageName="users"
       headName="新建用户"
+      :departmentItemName="departmentItemName"
+      :roleItemName="roleItemName"
       @handleNewClick="handleNewData"
       @handleEditClick="handleEditData"
     ></page-content>
@@ -17,13 +19,12 @@
       ref="pageModalRef"
       pageName="users"
       :defaultValue="defaultValue"
-      headName="新建用户"
     ></page-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, reactive } from 'vue'
 import { useStore } from '@/store'
 
 import PageSearch from '@/components/page-search/src/page-search.vue'
@@ -46,6 +47,7 @@ export default defineComponent({
   },
 
   setup() {
+    const headName = ref('用户')
     //1、 处理密码的逻辑   编辑密码不可见 新建密码可见
     const handleNew = () => {
       for (const item of modalConfig.formItems) {
@@ -54,6 +56,7 @@ export default defineComponent({
         }
       }
     }
+    //编辑
     const handleEdit = () => {
       for (const item of modalConfig.formItems) {
         if (item.field === 'password') {
@@ -62,32 +65,66 @@ export default defineComponent({
       }
     }
 
-    //2、动态添加部门和角色列表  需要响应式
+    //2、动态添加部门和角色列表  响应式
     const store = useStore()
     const modalConfigRef = computed(() => {
+      //用户部门
       const departmentItem = modalConfig.formItems.find((item) => {
         return item.field === 'departmentId'
       })
-      // console.log(departmentItem)
+      // console.log('departmentItem:', departmentItem)
       departmentItem!.options = store.state.departmentList.map((item) => {
         return { title: item.name, value: item.name }
       })
+      //用户角色
       const roleItem = modalConfig.formItems.find((item) => {
         return item.field === 'roleId'
       })
-      // console.log(roleItem)
+      // console.log('roleItem:', roleItem)
       roleItem!.options = store.state.roleList.map((item) => {
         return { title: item.name, value: item.name }
       })
+      // console.log('departmentItem:', departmentItem?.options)
       return modalConfig
+    })
+
+    //部门名
+    const departmentItemName = computed(() => {
+      const departmentItem = modalConfig.formItems.find((item) => {
+        return item.field === 'departmentId'
+      })
+
+      departmentItem!.options = store.state.departmentList.map((item) => {
+        return item.name
+      })
+      // console.log('departmentItem:', departmentItem?.options)
+      return departmentItem!.options.reverse()
+    })
+    const changeDepartmentItemName = (departmentItemName: any) => {
+      store.commit('system/changedepartmentItemName', departmentItemName.value)
+    }
+    changeDepartmentItemName(departmentItemName)
+
+    //角色名
+    const roleItemName = computed(() => {
+      const roleItem = modalConfig.formItems.find((item) => {
+        return item.field === 'roleId'
+      })
+      // console.log('departmentItem:', departmentItem)
+      roleItem!.options = store.state.roleList.map((item) => {
+        return item.name
+      })
+      // console.log('roleItem:', roleItem?.options)
+      return roleItem!.options.reverse()
     })
 
     //调用hook
     const [pageContentRef, queryClick] = usePageSearch()
     const [pageModalRef, defaultValue, handleNewData, handleEditData] =
-      usePageModal(handleNew, handleEdit)
+      usePageModal(handleNew, handleEdit, headName)
 
     return {
+      departmentItemName,
       contentTableConfig,
       searchFormConfig,
       modalConfigRef,
@@ -96,7 +133,9 @@ export default defineComponent({
       pageModalRef,
       queryClick,
       handleNewData,
-      handleEditData
+      handleEditData,
+      roleItemName,
+      changeDepartmentItemName
     }
   }
 })

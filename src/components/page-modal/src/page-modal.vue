@@ -35,7 +35,7 @@ export default defineComponent({
   props: {
     modalConfig: {
       type: Object,
-      required: true
+      default: () => ({})
     },
     defaultValue: {
       type: Object,
@@ -48,20 +48,22 @@ export default defineComponent({
     pageName: {
       type: String,
       required: true
-    },
-    headName: {
-      type: String,
-      required: true
     }
   },
   setup(props) {
     const dialogVisible = ref(false)
     const formData = ref<any>({})
+    const headName = ref('')
+    // console.log(props.modalConfig.formItems)
+    // console.log('传值:', props.modalConfig.formItems)
 
     //监听defaultValue 回显作用
+    //传入为get函数 newValue为一个Proxy对象
     watch(
       () => props.defaultValue,
       (newValue) => {
+        console.log('newValue:', newValue)
+        console.log('传值:', props.modalConfig.formItems)
         for (const item of props.modalConfig.formItems) {
           formData.value[`${item.field}`] = newValue[`${item.field}`]
         }
@@ -73,15 +75,15 @@ export default defineComponent({
     const handleConfirmClick = () => {
       dialogVisible.value = false
       if (Object.keys(props.defaultValue).length) {
-        //编辑按钮
+        //编辑
         store.dispatch('system/editPageDataAction', {
           pageName: props.pageName,
           editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultValue.id
         })
       } else {
-        //新建按钮
-        console.log('新建用户')
+        //新建
+        // console.log('新建用户')
         store.dispatch('system/creatPageDataAction', {
           pageName: props.pageName,
           creatData: { ...formData.value, ...props.otherInfo }
@@ -92,7 +94,8 @@ export default defineComponent({
     return {
       dialogVisible,
       formData,
-      handleConfirmClick
+      handleConfirmClick,
+      headName
     }
   }
 })
