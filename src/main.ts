@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import 'normalize.css'
 import './assets/css/index.less'
+import { initDomToCode } from 'dom-to-code'
 
 import 'element-plus/dist/index.css'
 import {
@@ -133,9 +134,18 @@ app.use(router)
 //     console.log(res.data)
 //   })
 
+// 初始化 dom-to-code
+// initDomToCode()
+
+// 推荐：只在非生产环境初始化
+process.env.NODE_ENV !== 'production' && initDomToCode()
+console.log(initDomToCode())
+console.log(process.env.NODE_ENV)
+
 //对UTC时间格式化.   过滤器
 import { formatUtcString } from '@/utils/date-format'
 
+//替换vue2的Vue.prototype
 app.config.globalProperties.$filters = {
   formatTime(value: string) {
     return formatUtcString(value)

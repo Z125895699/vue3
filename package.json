@@ -13,6 +13,7 @@
     "coderwhy": "^1.1.4",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.6",
+    "dom-to-code": "^1.5.0",
     "echarts": "^5.2.0",
     "element-plus": "^1.1.0-beta.7",
     "normalize.css": "^8.0.1",

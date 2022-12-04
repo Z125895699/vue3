@@ -32,7 +32,9 @@ export default defineComponent({
     const formOrignData: any = {}
     for (const item of formItems) {
       formOrignData[item.field] = ''
+      console.log('formOrignData', formOrignData)
     }
+    // console.log('formOrignData',formOrignData)
     const formData = ref(formOrignData)
 
     //2、优化重置点击
@@ -48,6 +50,7 @@ export default defineComponent({
 
     //3、优化搜索点击
     const handleQueryClick = () => {
+      console.log('formData.value', formData.value)
       emit('queryClick', formData.value)
     }
     return {

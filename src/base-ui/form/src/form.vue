@@ -91,6 +91,7 @@ export default defineComponent({
       formData,
       (newValue) => {
         emit('update:modelValue', newValue)
+        console.log('formData:', newValue)
       },
       {
         deep: true

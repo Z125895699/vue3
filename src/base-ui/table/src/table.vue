@@ -104,7 +104,7 @@ export default defineComponent({
     //跳转页数
     const handleCurrentChange = (currentPage: number) => {
       // console.log('111:', currentPage)
-      //每一页减1为offfset
+      //每一页减1为offset
       currentPage = currentPage - 1
       console.log('111:', currentPage)
       emit('update:page', { ...props.page, currentPage })

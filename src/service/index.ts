@@ -32,10 +32,10 @@ const hyRequest = new HYRequest({
     responseInterceptorCatch: (err) => {
       //在响应失败之后做的事
       // console.log('响应失败的拦截')
-      ElMessage.warning({
-        message: '您的账号或密码错误',
-        type: 'warning'
-      })
+      // ElMessage.warning({
+      //   message: '您的账号或密码错误',
+      //   type: 'warning'
+      // })
       return err
     }
   }
