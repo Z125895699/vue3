@@ -14,7 +14,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const allRoutes: RouteRecordRaw[] = []
   //require.context(webpack的函数)第一个参数是路径   第二个参数决定递归   第三个参数是匹配ts文件
   const routeFiles = require.context('../router/main', true, /\.ts/)
-  routeFiles.keys().forEach((key) => {
+  routeFiles.keys().forEach((key: any) => {
     //./product/category/category.ts  做一个切割
     const route = require('../router/main' + key.split('.')[1])
     allRoutes.push(route.default)
